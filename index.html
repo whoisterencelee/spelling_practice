@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><style type="text/css" id="block-image-video"></style><head>
+<meta http-equiv="content-type" content="text/html; charset=Big5">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Youtube">
+<meta name="apple-mobile-web-app-title" content="Youtube">
+<meta name="theme-color" content="black">
+<meta name="msapplication-navbutton-color" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-starturl" content="index.html">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="icon" type="image/png" sizes="192x192" href="https://henry.com.mo/spelling/tube.png">
+<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="https://henry.com.mo/spelling/tube.png">
+
+<link rel="manifest" href="https://henry.com.mo/spelling/manifest.json">
+<!-- https://tomitm.github.io/appmanifest/ -->
+<style>
+	vi { display: block; }
+	it.hide { color: white; border-bottom: 1px solid black }
+</style>
+</head><body style="margin:0px;text-align:left;background:white;margin-left:5em;">
+
+Fill in the blanks
+
+Set#<input>
+
+<div id="test">
+</div>
+<div id="missing" style="color: red; font-size: 2em; margin:10px;">still missing: </div>
+
+<script src="apikey.js"></script>
+<script>
+// API-key 97eb7f13-5025-44b4-b8ca-3b2075055a49
+
+//var words = [ "moron" , "tesseract" , "travelling" , "encyclopaedia" , "universe" , "dimensions" , "exactly" , "credible" , "beneath" , "refrigerator" , "clothes" , "tattoo" , "counselor" , "electric fence" , "blazing heat" , "sunburned" , "scarcity" , "thrilled" , "canteen" , "saliva" ]
+//var words = [ "matter of taste" , "manna from heaven" , "round the clock" , "a nail-biting rescue" , "satellite", "environment", "authority" , "explosion" , "components" , "immediately" , "conference" , "assistance" , "mounds" , "shovelfuls" , "unearthed" , "occurred" , "eternity" , "peeped" , "summoned" , "baloney sandwich" ]
+//var words = [ "important" , "importance", "distant" , "distance" , "ignorant" , "ignorance" , "tolerant" , "tolerance" , "brilliant" , "brilliance" , "dominant" , "dominance" , "accept" , "acceptance" , "allow" , "allowance" , "attend" , "attendance", "assist" , "assistance" , "appear" , "appearance" , "clear" , "clearance" , "rely" , "reliance" , "apply" , "appliance" , "defy" , "defiance" ] // set #1
+//var words = [ "there" , "their" , "they're" , "your" , "you're" , "to" , "too" , "two" , "fair" , "fare" , "successful" , "occurrence" , "embarrassed" , "disappointed" , "tomorrow" , "know" , "no" , "write" , "right" , "which" , "witch" , "scene" , "seen" , "Wednesday" ] // set #2
+//var words = [ "x-ray" , "mid-Autumn" , "three-quarters" , "twelve-year-old" , "part-time" , "long-term" , "left-handed" , "open-minded" , "sugar-free" , "up-to-date" , "over-the-counter" , "green-fingered" , "co-pilot" , "re-elect" , "self-service" , "pre-empt" ] // set #3
+//var words = [ "and" , "besides" , "In addition" , "Moreover" , "but" , "However" , "although" , "On the other hand" , "because" , "since" , "Therefore" , "As a result" , "First of all" , "Then"  ,"At last" , "Finally" ] // set #4
+//var words = [ "absent" , "absence" , "patient" , "patience" , "confident" , "confidence" , "different" , "difference" , "violent" , "violence" , "competent" , "competence" , "diligent" , "diligence" , "exist" , "existence" , "depend" , "dependence" , "prefer" , "preference" , "pretend" , "pretence" , "occur" , "occurrence" , "obey" , "obedience" , "defend" , "defence" , "offend" , "offence" ] // set #6
+//var words = [ "accurately" , "carefully" , "tidily" , "legibly" , "everyday" , "yesterday" , "soon" , "afterwards" , "somewhere" , "there" , "outside" , "worldwide" , "always" , "usually" , "sometimes" , "seldom" , "very" , "quite" , "hardly" , "extremely" ] // set #6
+//var words = [ "adventurous" , "arrogant" , "childish" , "curious" , "easy-going" , "generous" , "humble" , "humorous" , "mature" , "responsible" , "selfish" , "sly" , "sociable" , "stubborn" , "timid" , "trustworthy" ] // set #7
+//var words = [ "earnest" , "profound" , "motionless" , "ferociously" , "humbly" , "sideways" , "flinch" , "falters" , "overpowers" , "captives" , "culprit" , "ciphering-book" , "idleness" , "desire" , "determination" , "perception" ] // set #8
+//var words = [ "magician" , "musician" , "optician" , "politician" , "clinician" , "technician" , "beautician" , "mathematician" , "artist" , "novelist" , "journalist" , "terrorist" , "activist" , "finalist" , "biologist" , "scientist" ] // set #9
+//var words = [ "disappear" , "disadvantage" , "disappoint" , "transform" , "transport" , "restart" , "replay" , "reconnect" , "anticlockwise" , "antisocial" , "almost" , "always" ]
+//var words = [ "goodness" , "happiness" , "fitness" , "seasonal" , "accidental" , "national" , "membership" , "friendship" , "leadership" , "neighbourhood" , "childhood" , "parenthood" ]
+//var w = "run,ran,hear,heard,see,saw,do,did,break,broke,is,was,tell,told,hold,held,fly,flew,feel,felt,buy,brought,shake,shook"
+var w = "actor,act,play,stage,theatre,props,costume,audience,scene,directions,characters,playscript"
+var words = w.split(",")
+var testdiv = document.getElementById( "test" )
+var missingdiv = document.getElementById( "missing" )
+
+var test = []
+var missing = []
+var done = 0
+
+words.forEach( function( word ){
+
+	var req = new XMLHttpRequest()
+	req.open( "GET" , "https://www.dictionaryapi.com/api/v1/references/learners/xml/"+word+"?key=" + apikey , true )
+	req.responseType = "document"
+	req.onreadystatechange = function() {
+		if( req.readyState === 4 ){
+			if( req.status === 200 ){
+				var resp = req.responseXML
+				getExamples( resp )
+				if( ++done >= words.length ){
+
+					// shuffle
+					test.forEach((val, key) => {
+							randomIndex = Math.ceil(Math.random()*(key + 1));
+							test[key] = test[randomIndex];
+							test[randomIndex] = val;
+							})
+
+					test.forEach( ( sentence ) => { testdiv.appendChild( sentence ) } )
+
+					var s = missing.length
+					var html = ""
+					while( s-- ){ html += ", " + missing[ s ] }
+					missingdiv.innerHTML = "still missing: " + html.substring(1)
+
+				}
+			}
+		}
+	}
+	req.send( null )
+
+	// parse response
+	function getExamples( resp ){
+		/*
+		var entry = resp.getElementById( word )
+		if( !entry ) return
+		*/
+		var example = resp.getElementsByTagName( "vi" )
+		if( !example ) return
+		var s = example.length
+		if( s == 0 ) missing.push( word )
+		while( s-- ){
+			var sentence = example[ s ]
+			var variation = sentence.getElementsByTagName( "it" )[0]
+			if( variation && variation.textContent == word ){
+				variation.className = "hide"
+				 test.push( sentence )
+			}
+		}
+			
+	}
+
+}) // foreach
+
+</script>
+
+
+</body></html>
